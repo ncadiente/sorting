@@ -1,0 +1,26 @@
+$dark-color : #333333;
+
+h1 {
+  background: yellow;
+}
+
+body {
+  background: red;
+}
+
+#visualDiv {
+  display: flex;
+  flex-flow: row-resize nowrap;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: auto;
+  width: auto;
+}
+
+.bar {
+  display: flex;
+  margin: 5px;
+  background: green;
+  width: 20px;
+  justify-content: center;
+}
