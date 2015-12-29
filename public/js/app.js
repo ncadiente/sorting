@@ -2,7 +2,6 @@
 window.onload = function() {
 
 var sorter = require('./sort.js');
-console.log('what');
 var buttonDiv = document.createElement('div');
 buttonDiv.id = "buttonDiv";
 document.body.appendChild(buttonDiv);
@@ -22,17 +21,17 @@ document.getElementById("buttonDiv").appendChild(button);
 
 makeButton("Initialize", function(){
   randomGen(21);
-  drawBars();
+  drawBars(randomArray);
 });
 
 makeButton ("BubbleSort", function() {
   randomArray = sorter.bubbleSort(randomArray);
-  drawBars();
+  drawBars(randomArray);
 });
 
 makeButton ("QuickSort", function() {
   randomArray = sorter.quickSort(randomArray);
-  drawBars();
+  drawBars(randomArray);
 });
 
 function randomGen(num) {
@@ -46,38 +45,16 @@ function randomGen(num) {
   }
 }
 
-function drawBars() {
+function drawBars(array) {
 document.getElementById('visualDiv').innerHTML = '';
-  for (var i = 0; i < randomArray.length; i++){
+  for (var i = 0; i < array.length; i++){
     var bar = document.createElement('div');
     bar.className = 'bar';
-    bar.innerHTML = randomArray[i];
-    bar.style.height = (randomArray[i]* 25) + "px";
+    bar.innerHTML = array[i];
+    bar.style.height = (array[i]* 25) + "px";
     visualDiv.appendChild(bar);
   }
 }
 
 
 };
-
-// module.bubbleSort = function(array) {
-//     swapping = true;
-//     swaps = 0;
-//      while(swapping === true) {
-//        var moves = 0;
-//        for (var i = 0; i < array.length; i++) {
-//          if (array[i]> array[i+1]) {
-//            moves++;
-//            var a = array[i];
-//            var b = array[i + 1];
-//            array[i] = b;
-//            array[i+1] = a;
-//          }
-//        }
-//        swaps+= moves;
-//        if (moves === 0) {
-//          swapping = false;
-//        }
-//      }
-//      return array;
-//    };

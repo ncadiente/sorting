@@ -15,4 +15,19 @@ describe('sorter', function () {
     expect(sorter.bubbleSort).to.exist;
     expect(sorter.bubbleSort).to.be.a('function');
   });
+
+  it('should have a method quickSort', function() {
+    expect(sorter.quickSort).to.exist;
+    expect(sorter.quickSort).to.be.a('function');
+  });
+
+  it('should have a method selectionSort', function() {
+    expect(sorter.selectionSort).to.exist;
+    expect(sorter.selectionSort).to.be.a('function');
+  });
+
+  it('should have a method getSwaps', function() {
+    expect(sorter.getSwaps).to.exist;
+    expect(sorter.getSwaps).to.be.a('function');
+  });
 });
