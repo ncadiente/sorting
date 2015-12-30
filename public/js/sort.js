@@ -1,4 +1,4 @@
-var sorter = (function() {
+module.exports = (function() {
   var module = {};
   var swapping = true;
   var swaps = 0;
@@ -56,8 +56,63 @@ var sorter = (function() {
   };
 
   module.selectionSort = function(array){
-
+    for(var x = 0; x < array.length; x++) {
+      var lowest = array[x];
+      for(var z = x + 1; z < array.length; z++) {
+        if(array[z] < lowest){
+          lowest = array[z];
+        }
+      }
+      array.splice( x, 0, (array.splice(array.indexOf(lowest),1)[0]));
+    }
+    return array;
   };
+
+  module.mergeSort = function(array) {
+    function merge(a, b){
+      var sorted = [];
+      while (b.length !== 0 && a.length !==0){
+        if (b[0] < a[0]) {
+          sorted.push(b.shift());
+        }
+        if (b[0] > a[0]) {
+          sorted.push(a.shift());
+        }
+      }
+      while(a.length !== 0){
+        sorted.push(a.shift());
+      }
+      while(b.length !==0){
+        sorted.push(b.shift());
+      }
+      return sorted;
+    }
+
+    if (array.length <= 1) {
+      return array;
+    }
+    var right = array.splice(Math.floor(array.length/2), array.length);
+    var left = array;
+    left = mergeSort(left);
+    right = mergeSort(right);
+  return merge(left,right);
+};
+
+module.insertionSort = function(array) {
+  for (var x = 1; x < array.length; x++) {
+    for (var y = 0; y < x; y++) {
+      if (array[x] <= array[0]) {
+        array.unshift(array.splice(x,1)[0]);
+        break;
+      }
+      if (array[x] >= array[y] && array[x] <= array[y+1]) {
+        array.splice(y+1, 0, array.splice(x, 1)[0]);
+        break;
+      }
+    }
+  }
+  return array;
+};
 
   module.getSwaps = function() {
     return swaps;
@@ -67,10 +122,12 @@ var sorter = (function() {
 }());
 
 
+// var tArray = [5, 1, 4, 2, 8, 10, 11, 3, 9];
+// console.log(tArray);
+// console.log(selectionSort(tArray));
 
-console.log(sorter);
-
-//  var tArray = [5, 1, 4, 2, 8, 10, 11, 3, 9];
+// console.log(test[0]);
+// var test =[];
 // console.log(quickSort(tArray));
 // var testArray = [5, 1, 4, 2, 8];
 // var ter = sorter;
