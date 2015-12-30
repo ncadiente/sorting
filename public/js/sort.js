@@ -14,10 +14,19 @@ module.exports = (function() {
     }
   }
 
+  function wait(flag) {
+    if(!flag) {
+      setTimeout(function() {
+       wait(true);
+      }, 5000);
+    return;
+    }
+    drawBars(array);
+  }
+
   module.bubbleSort = function(array) {
     swapping = true;
     swaps = 0;
-     window.setInterval( function () {
       while(swapping === true) {
        var moves = 0;
        for (var i = 0; i < array.length; i++) {
@@ -27,7 +36,8 @@ module.exports = (function() {
            var b = array[i + 1];
            array[i] = b;
            array[i+1] = a;
-           window.setInterval(drawBars(array), 5000);
+          setTimeout(drawBars(array), 1500);
+
          }
        }
        swaps+= moves;
@@ -36,7 +46,6 @@ module.exports = (function() {
        }
      }
      return array;
-   }, 1200);
    };
 
   module.quickSort = function(array){
@@ -95,8 +104,8 @@ module.exports = (function() {
     var left = array;
     left = mergeSort(left);
     right = mergeSort(right);
-  return merge(left,right);
-};
+    return merge(left,right);
+  };
 
 module.insertionSort = function(array) {
   for (var x = 1; x < array.length; x++) {
@@ -121,10 +130,40 @@ module.insertionSort = function(array) {
   return module;
 }());
 
+function mergeSort(array) {
+    function merge(a, b){
+      var sorted = [];
+      while (b.length !== 0 && a.length !==0){
+        if (b[0] < a[0]) {
+          sorted.push(b.shift());
+        }
+        if (b[0] > a[0]) {
+          sorted.push(a.shift());
+        }
+      }
+      while(a.length !== 0){
+        sorted.push(a.shift());
+      }
+      while(b.length !==0){
+        sorted.push(b.shift());
+      }
+      return sorted;
+    }
+
+    if (array.length <= 1) {
+      return array;
+    }
+    var right = array.splice(Math.floor(array.length/2), array.length);
+    var left = array;
+    left = mergeSort(left);
+    right = mergeSort(right);
+    merge(left,right);
+  return merge(left,right);
+}
 
 // var tArray = [5, 1, 4, 2, 8, 10, 11, 3, 9];
 // console.log(tArray);
-// console.log(selectionSort(tArray));
+// console.log(mergeSort(tArray));
 
 // console.log(test[0]);
 // var test =[];
@@ -136,3 +175,5 @@ module.insertionSort = function(array) {
 
 // console.log(ter.bubbleSort(testArray));
 // console.log(ter.getSwaps());
+
+//saves the sorting methods before setting up for visualization

@@ -25,12 +25,27 @@ makeButton("Initialize", function(){
 });
 
 makeButton ("BubbleSort", function() {
-  randomArray = sorter.bubbleSort(randomArray);
-  drawBars(randomArray);
+  sorter.bubbleSort(randomArray);
+  //drawBars(randomArray);
 });
 
 makeButton ("QuickSort", function() {
   randomArray = sorter.quickSort(randomArray);
+  drawBars(randomArray);
+});
+
+makeButton ("MergeSort", function() {
+  randomArray = sorter.mergeSort(randomArray);
+  drawBars(randomArray);
+});
+
+makeButton ("SelectionSort", function() {
+  randomArray = sorter.selectionSort(randomArray);
+  drawBars(randomArray);
+});
+
+makeButton ("InsertionSort", function() {
+  randomArray = sorter.insertionSort(randomArray);
   drawBars(randomArray);
 });
 
@@ -56,5 +71,6 @@ document.getElementById('visualDiv').innerHTML = '';
   }
 }
 
+setTimeout(console.log(" 5 seconds"), 5000);
 
 };

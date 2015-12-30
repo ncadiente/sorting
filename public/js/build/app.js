@@ -1423,12 +1423,27 @@ makeButton("Initialize", function(){
 });
 
 makeButton ("BubbleSort", function() {
-  randomArray = sorter.bubbleSort(randomArray);
-  drawBars(randomArray);
+  sorter.bubbleSort(randomArray);
+  //drawBars(randomArray);
 });
 
 makeButton ("QuickSort", function() {
   randomArray = sorter.quickSort(randomArray);
+  drawBars(randomArray);
+});
+
+makeButton ("MergeSort", function() {
+  randomArray = sorter.mergeSort(randomArray);
+  drawBars(randomArray);
+});
+
+makeButton ("SelectionSort", function() {
+  randomArray = sorter.selectionSort(randomArray);
+  drawBars(randomArray);
+});
+
+makeButton ("InsertionSort", function() {
+  randomArray = sorter.insertionSort(randomArray);
   drawBars(randomArray);
 });
 
@@ -1454,9 +1469,10 @@ document.getElementById('visualDiv').innerHTML = '';
   }
 }
 
+setTimeout(console.log(" 5 seconds"), 5000);
 
 };
-}).call(this,require("rH1JPG"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_c9f58d5d.js","/")
+}).call(this,require("rH1JPG"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_98cac82d.js","/")
 },{"./sort.js":6,"buffer":2,"rH1JPG":4}],6:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 module.exports = (function() {
@@ -1464,10 +1480,31 @@ module.exports = (function() {
   var swapping = true;
   var swaps = 0;
 
+  function drawBars(array) {
+    document.getElementById('visualDiv').innerHTML = '';
+    for (var i = 0; i < array.length; i++){
+      var bar = document.createElement('div');
+      bar.className = 'bar';
+      bar.innerHTML = array[i];
+      bar.style.height = (array[i]* 25) + "px";
+      visualDiv.appendChild(bar);
+    }
+  }
+
+  function wait(flag) {
+    if(!flag) {
+      setTimeout(function() {
+       wait(true);
+      }, 5000);
+    return;
+    }
+    drawBars(array);
+  }
+
   module.bubbleSort = function(array) {
     swapping = true;
     swaps = 0;
-     while(swapping === true) {
+      while(swapping === true) {
        var moves = 0;
        for (var i = 0; i < array.length; i++) {
          if (array[i]> array[i+1]) {
@@ -1476,6 +1513,8 @@ module.exports = (function() {
            var b = array[i + 1];
            array[i] = b;
            array[i+1] = a;
+           console.log('here');
+           wait(false);
          }
        }
        swaps+= moves;
@@ -1502,6 +1541,65 @@ module.exports = (function() {
   return this.quickSort(a).concat(array[0], this.quickSort(b));
   };
 
+  module.selectionSort = function(array){
+    for(var x = 0; x < array.length; x++) {
+      var lowest = array[x];
+      for(var z = x + 1; z < array.length; z++) {
+        if(array[z] < lowest){
+          lowest = array[z];
+        }
+      }
+      array.splice( x, 0, (array.splice(array.indexOf(lowest),1)[0]));
+    }
+    return array;
+  };
+
+  module.mergeSort = function(array) {
+    function merge(a, b){
+      var sorted = [];
+      while (b.length !== 0 && a.length !==0){
+        if (b[0] < a[0]) {
+          sorted.push(b.shift());
+        }
+        if (b[0] > a[0]) {
+          sorted.push(a.shift());
+        }
+      }
+      while(a.length !== 0){
+        sorted.push(a.shift());
+      }
+      while(b.length !==0){
+        sorted.push(b.shift());
+      }
+      return sorted;
+    }
+
+    if (array.length <= 1) {
+      return array;
+    }
+    var right = array.splice(Math.floor(array.length/2), array.length);
+    var left = array;
+    left = mergeSort(left);
+    right = mergeSort(right);
+  return merge(left,right);
+};
+
+module.insertionSort = function(array) {
+  for (var x = 1; x < array.length; x++) {
+    for (var y = 0; y < x; y++) {
+      if (array[x] <= array[0]) {
+        array.unshift(array.splice(x,1)[0]);
+        break;
+      }
+      if (array[x] >= array[y] && array[x] <= array[y+1]) {
+        array.splice(y+1, 0, array.splice(x, 1)[0]);
+        break;
+      }
+    }
+  }
+  return array;
+};
+
   module.getSwaps = function() {
     return swaps;
   };
@@ -1509,11 +1607,43 @@ module.exports = (function() {
   return module;
 }());
 
+function mergeSort(array) {
+    function merge(a, b){
+      var sorted = [];
+      while (b.length !== 0 && a.length !==0){
+        if (b[0] < a[0]) {
+          sorted.push(b.shift());
+        }
+        if (b[0] > a[0]) {
+          sorted.push(a.shift());
+        }
+      }
+      while(a.length !== 0){
+        sorted.push(a.shift());
+      }
+      while(b.length !==0){
+        sorted.push(b.shift());
+      }
+      return sorted;
+    }
 
+    if (array.length <= 1) {
+      return array;
+    }
+    var right = array.splice(Math.floor(array.length/2), array.length);
+    var left = array;
+    left = mergeSort(left);
+    right = mergeSort(right);
+    merge(left,right);
+  return merge(left,right);
+}
 
+// var tArray = [5, 1, 4, 2, 8, 10, 11, 3, 9];
+// console.log(tArray);
+// console.log(mergeSort(tArray));
 
-
-//  var tArray = [5, 1, 4, 2, 8, 10, 11, 3, 9];
+// console.log(test[0]);
+// var test =[];
 // console.log(quickSort(tArray));
 // var testArray = [5, 1, 4, 2, 8];
 // var ter = sorter;
@@ -1523,5 +1653,6 @@ module.exports = (function() {
 // console.log(ter.bubbleSort(testArray));
 // console.log(ter.getSwaps());
 
+//saves the sorting methods before setting up for visualization
 }).call(this,require("rH1JPG"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/sort.js","/")
 },{"buffer":2,"rH1JPG":4}]},{},[5])
