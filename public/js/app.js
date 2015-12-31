@@ -25,8 +25,37 @@ makeButton("Initialize", function(){
 });
 
 makeButton ("BubbleSort", function() {
-  sorter.bubbleSort(randomArray);
+  //sorter.bubbleSort(randomArray);
   //drawBars(randomArray);
+  var i = 0;
+  var moves = 0;
+  function bubbleLoop(array) {
+    console.log("in bubbleLoop");
+    if(i === array.length) {
+      console.log("clears");
+      i = 0;
+      if (moves === 0) {
+        clearInterval(loop);
+      }
+      moves = 0;
+    }
+    if(i < array.length){
+      if (array[i]> array[i+1]) {
+        console.log("in swap");
+        moves++;
+        var a = array[i];
+        var b = array[i + 1];
+        array[i] = b;
+        array[i+1] = a;
+        drawBars(array);
+      }
+    i++;
+    console.log(i);
+    }
+}
+var loop = setInterval( function() {
+  bubbleLoop(randomArray);
+}, 100);
 });
 
 makeButton ("QuickSort", function() {
@@ -71,6 +100,6 @@ document.getElementById('visualDiv').innerHTML = '';
   }
 }
 
-setTimeout(console.log(" 5 seconds"), 5000);
+// setTimeout(console.log(" 5 seconds"), 5000);
 
 };

@@ -14,39 +14,42 @@ module.exports = (function() {
     }
   }
 
-  function wait(flag) {
-    if(!flag) {
-      setTimeout(function() {
-       wait(true);
-      }, 5000);
-    return;
-    }
-    drawBars(array);
-  }
-
   module.bubbleSort = function(array) {
     swapping = true;
     swaps = 0;
       while(swapping === true) {
-       var moves = 0;
-       for (var i = 0; i < array.length; i++) {
-         if (array[i]> array[i+1]) {
-           moves++;
-           var a = array[i];
-           var b = array[i + 1];
-           array[i] = b;
-           array[i+1] = a;
-          setTimeout(drawBars(array), 1500);
-
+        var moves = 0;
+        var i = 0;
+        function bubbleLoop(array) {
+          console.log("in bubbleLoop");
+          if(i === array.length) {
+            console.log("clears");
+            clearInterval(loop);
+          }
+          if(i < array.length){
+            if (array[i]> array[i+1]) {
+              console.log("in swap");
+              moves++;
+              var a = array[i];
+              var b = array[i + 1];
+              array[i] = b;
+              array[i+1] = a;
+              drawBars(array);
+            }
+            i++;
+            console.log(i);
+          }
+      }
+        var loop = setInterval( bubbleLoop(array), 1500);
+        swaps+= moves;
+        if (moves === 0) {
+           console.log("in end");
+           swapping = false;
          }
-       }
-       swaps+= moves;
-       if (moves === 0) {
-         swapping = false;
-       }
-     }
-     return array;
-   };
+        // console.log("hit return");
+        //return array;
+      }
+  };
 
   module.quickSort = function(array){
     var a = [];
